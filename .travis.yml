@@ -52,8 +52,8 @@ script:                   # 编译任务
   #- mv app/build/outputs/apk/app-parent-devrelease.apk app/build/outputs/apk/devrelease.apk
 
 
-deploy:                             # 部署到GitHub Release
-  provider: releases                # 部署到GitHub Release，除此之外，Travis CI还支持发布到fir.im、AWS、Google App Engine等
+#deploy:                             # 部署到GitHub Release
+#  provider: releases                # 部署到GitHub Release，除此之外，Travis CI还支持发布到fir.im、AWS、Google App Engine等
 #  api_key:                          # 填写GitHub的token （Settings -> Personal access tokens -> Generate new token）
 #    secure: $GITHUB_TOKENS
 #  file:
