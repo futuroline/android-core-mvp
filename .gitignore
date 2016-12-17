@@ -47,13 +47,8 @@ captures/
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
-#.gitignore
-#app/libs/
-#app/src/main/res/drawable/
-#core/libs/
-#core/src/main/java/
-#core/src/main/res/drawable/
 .idea/compiler.xml
 .idea/runConfigurations.xml
 .idea/vcs.xml
 .idea/copyright/profiles_settings.xml
+libs/
