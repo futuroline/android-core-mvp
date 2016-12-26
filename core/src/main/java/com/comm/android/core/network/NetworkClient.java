@@ -1,12 +1,11 @@
 package com.comm.android.core.network;
 
+import com.comm.android.core.BuildConfig;
 import com.comm.android.core.network.Interceptors.AuthInterceptor;
-import com.comm.android.core.network.api.BaseApi;
+import com.comm.android.core.network.api.ApiCallback;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,7 +24,7 @@ public class NetworkClient {
             synchronized (NetworkClient.class){
                if (mRetrofit ==null){
                    /* mRetrofit = new Retrofit.Builder()
-                           .baseUrl(BaseApi.getHost())
+                           .baseUrl(ApiCallback.getHost())
                            .addConverterFactory(GsonConverterFactory.create())
                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                            .build();*/
@@ -106,14 +105,16 @@ service = mRetrofit.create(YourApi.class);
                    //以上设置结束，才能build(),不然设置白搭
                    OkHttpClient okHttpClient = builder.build();
                    mRetrofit = new Retrofit.Builder()
-                           .baseUrl(BaseApi.getHost())
+                           .baseUrl(ApiCallback.getHost())
                            .client(okHttpClient)
                            .build();*/
                    AuthInterceptor authInterceptor = new AuthInterceptor();
                    OkHttpClient.Builder builder = new OkHttpClient.Builder();
                    builder.connectTimeout(30, TimeUnit.SECONDS);
-                   //设置拦截器，以用于自定义Cookies的设置
-                   builder.addNetworkInterceptor(new HttpLoggingInterceptor());
+                   if (BuildConfig.DEBUG){
+                       //设置拦截器，以用于自定义Cookies的设置
+                       builder.addNetworkInterceptor(new HttpLoggingInterceptor());
+                   }
                    //增加认证拦截器
                    builder.addNetworkInterceptor(authInterceptor);
                    //设置缓存目录
@@ -125,7 +126,7 @@ service = mRetrofit.create(YourApi.class);
                    //构建Retrofit
                    mRetrofit = new Retrofit.Builder()
                            //配置服务器路径
-                           .baseUrl(BaseApi.getHost())
+                           .baseUrl(ApiCallback.getHost())
                            //配置转化库，默认是Gson
                            .addConverterFactory(GsonConverterFactory.create())
                            //配置回调库，采用RxJava
